@@ -71,4 +71,20 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     .attr("fill", "pink")
     .attr("opacity", ".5");
 
+      // Create country code labels for circles
+    var labels = chartGroup.selectAll("text")
+    .data(healthData)
+    .enter()
+    .append("text")
+    .attr("text-anchor", "middle")
+    .attr("x", d => xLinearScale(d.income))
+    .attr("y", d => yLinearScale(d.healthcare))
+    //.attr("fill", "black")
+    //.attr("opacity", "1")
+    //.attr("font-family", "arial")
+    //.attr("font-weight", 700)
+    .text(function(d) {
+        return d.abbr;
+    });
+
 });
