@@ -29,7 +29,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
         //Question: can a loop parse each column?
     // ==============================
     healthData.forEach(function(data) {
-        data.income = parseFloat(data.income);
+        data.income = parseInt(data.income);
         data.healthcare = parseFloat(data.healthcare);
       });
 
