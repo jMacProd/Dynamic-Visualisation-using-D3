@@ -21,6 +21,7 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
 .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+
 // Import Data
 d3.csv("assets/data/data.csv").then(function(healthData) {
 
@@ -58,8 +59,8 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
 
       chartGroup.append("g")
       .call(leftAxis);
-
-      // Step 5: Create Circles
+    
+     // Step 5: Create Circles
     // ==============================
     var circlesGroup = chartGroup.selectAll("circle")
     .data(healthData)
@@ -86,5 +87,20 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     .text(function(d) {
         return d.abbr;
     });
+    
+    // Create axes labels
+    chartGroup.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left + 40)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "1em")
+      .attr("class", "axisText")
+      .text("Health Care");
+
+      chartGroup.append("text")
+      .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+      .attr("class", "axisText")
+      .text("Income");
+
 
 });
