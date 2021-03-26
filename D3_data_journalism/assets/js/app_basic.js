@@ -38,8 +38,8 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     var xLinearScale = d3.scaleLinear()
       //starting with 0 to max - but consider d3.extent(xxx) if think it needs later
       //"d" = row (ie check each row and provide the max)
-      .domain(d3.extent(healthData, d => d.income))    
-      //.domain([0, d3.max(healthData, d => d.income)])
+      //.domain(d3.extent(healthData, d => d.income))    
+      .domain([d3.min(healthData, d => d.income)*0.95, d3.max(healthData, d => d.income)*1.05])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
@@ -68,21 +68,23 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     .append("circle")
     .attr("cx", d => xLinearScale(d.income))
     .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", "15")
-    .attr("fill", "pink")
-    .attr("opacity", ".5");
+    .attr("r", "10")
+    .attr("fill", "#8bbcd5")
+    .attr("opacity", "1");
 
       // Create country code labels for circles
+        //https://stackoverflow.com/questions/26576050/d3-enter-append-not-appending-all-elements-of-my-array
     var labels = chartGroup.selectAll("text.clabels")
     .data(healthData)
     .enter()
     .append("text")
-    //.attr("text-anchor", "middle")
+    .attr("text-anchor", "middle")
     .attr("class", "clabels")
     .attr("x", d => xLinearScale(d.income))
-    .attr("y", d => yLinearScale(d.healthcare))
-    .attr("fill", "black")
-    .attr("font-size", 18)
+    .attr("y", d => yLinearScale(d.healthcare)+4)
+    .attr("fill", "white")
+    .attr("font-weight", "bold")
+    .attr("font-size", 10)
     .text(function(d) {
       return d.abbr;
     });

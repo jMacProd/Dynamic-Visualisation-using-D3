@@ -29,8 +29,8 @@ var chosenXAxis = "income";
 function xScale(healthData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenXAxis]),
-      d3.max(healthData, d => d[chosenXAxis])
+    .domain([d3.min(healthData, d => d[chosenXAxis]*0.95),
+      d3.max(healthData, d => d[chosenXAxis]*1.05)
     ])
     .range([0, width]);
 
@@ -58,6 +58,18 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
     .attr("cx", d => newXScale(d[chosenXAxis]));
 
   return circlesGroup;
+}
+
+// function used for updating circle LABELS group with a transition to
+// labels
+function rendercirclelabels(labels, newXScale, chosenXAxis) {
+
+  labels.transition()
+    .duration(1000)
+    .attr("x", d => newXScale(d[chosenXAxis]));
+    // .attr("cx", 10);
+
+  return labels;
 }
 
 // Import Data
@@ -96,7 +108,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-  .domain([0, d3.max(healthData, d => d.healthcare)])
+  .domain([0, d3.max(healthData, d => d.healthcare)*1.1])
   .range([height, 0]);
 
       // Step 3: Create axis functions
@@ -145,26 +157,26 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
   .append("circle")
   .attr("cx", d => xLinearScale(d[chosenXAxis]))
   .attr("cy", d => yLinearScale(d.healthcare))
-  .attr("r", 20)
-  .attr("fill", "pink")
-  .attr("opacity", ".5");
+  .attr("r", "10")
+  .attr("fill", "#8bbcd5")
+  .attr("opacity", "1");
 
 
-    //   // Create country code labels for circles
-    // var labels = chartGroup.selectAll("text")
-    // .data(healthData)
-    // .enter()
-    // .append("text")
-    // .attr("text-anchor", "middle")
-    // .attr("x", d => xLinearScale(d.income))
-    // .attr("y", d => yLinearScale(d.healthcare))
-    // //.attr("fill", "black")
-    // //.attr("opacity", "1")
-    // //.attr("font-family", "arial")
-    // //.attr("font-weight", 700)
-    // .text(function(d) {
-    //     return d.abbr;
-    // });
+  //Create country code labels for circles
+  var labels = chartGroup.selectAll("text.clabels")
+    .data(healthData)
+    .enter()
+    .append("text")
+    .attr("text-anchor", "middle")
+    .attr("class", "clabels")
+    .attr("x", d => xLinearScale(d[chosenXAxis]))
+    .attr("y", d => yLinearScale(d.healthcare)+4)
+    .attr("fill", "white")
+    .attr("font-weight", "bold")
+    .attr("font-size", 10)
+    .text(function(d) {
+      return d.abbr;
+    });
     
     // Create axes labels
     // chartGroup.append("text")
@@ -218,8 +230,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
 
       // replaces chosenXAxis with value
       chosenXAxis = value;
-
-      // console.log(chosenXAxis)
+      //console.log(chosenXAxis) //Confirmed selecting poverty
 
       // functions here found above csv import
       // updates x scale for new data
@@ -230,6 +241,8 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
 
       // updates circles with new x values
       circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+      labels = rendercirclelabels(labels, xLinearScale, chosenXAxis);
 
       // updates tooltips with new info
       //circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
