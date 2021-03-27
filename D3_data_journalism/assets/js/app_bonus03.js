@@ -25,6 +25,8 @@ var chartGroup = svg.append("g")
 // Initial Params
 var chosenXAxis = "income";
 var chosenYAxis = "healthcare";
+var tiplabelx = "Income"
+var tiplabely = "Health Care"
 // console.log(chosenXAxis);
 // console.log(chosenYAxis);
 
@@ -223,8 +225,8 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     .html(function(d) {
       return (`${d.state}
       <br>
-      Income: ${d[chosenXAxis]}<br>
-      Healthcare: ${d[chosenYAxis]}`);
+      ${tiplabelx}: ${d[chosenXAxis]}<br>
+      ${tiplabely}: ${d[chosenYAxis]}`);
     });
 
     // Step 2: Create the tooltip in chartGroup.
@@ -318,6 +320,13 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
       // updates tooltips with new info
       //circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
+
+      //Update tip label
+      tiplabelx = chosenXAxis[0].toUpperCase() + 
+      chosenXAxis.slice(1);
+
+
+
       // changes classes to change bold text
       if (chosenXAxis === "income") {
         incomelabel
@@ -363,6 +372,11 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
 
       // updates tooltips with new info
       //circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+      //Update tip label
+      tiplabely = chosenYAxis[0].toUpperCase() + 
+      chosenYAxis.slice(1);
+
       
       // changes classes to change bold text
       if (chosenYAxis === "healthcare") {
