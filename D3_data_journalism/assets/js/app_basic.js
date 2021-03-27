@@ -43,7 +43,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(healthData, d => d.healthcare)])
+      .domain([0, d3.max(healthData, d => d.healthcare)*1.04])
       .range([height, 0]);
 
       // Step 3: Create axis functions
@@ -88,13 +88,32 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     .text(function(d) {
       return d.abbr;
     });
-    //.attr("opacity", "1")
-    //.attr("font-family", "arial")
-    //.attr("font-weight", 700)
-    
-    // var cirlcetext = labels.text(function(d) {
-    //     return d.abbr;
-    // });
+   
+    // Step 1: Initialize Tooltip
+    var toolTip = d3.tip()
+    .attr("class", "tooltip")
+    .attr("class", "d3-tip")
+    .offset([80, -60])
+    .html(function(d) {
+      return (`${d.state}
+      <br>
+      Income: ${d.income}<br>
+      Healthcare: ${d.healthcare}`);
+    });
+
+    // Step 2: Create the tooltip in chartGroup.
+    chartGroup.call(toolTip);
+
+    // Step 3: Create "mouseover" event listener to display tooltip
+    circlesGroup.on("mouseover", function(d) {
+      toolTip.show(d, this);
+    })
+    // Step 4: Create "mouseout" event listener to hide tooltip
+    .on("mouseout", function(d) {
+      toolTip.hide(d);
+    });
+
+
     
     // Create axes labels
     chartGroup.append("text.labels")
