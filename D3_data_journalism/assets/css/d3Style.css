@@ -35,6 +35,15 @@
   stroke: #e3e3e3;
 }
 
+.stateCircle {
+  fill: #89bdd3;
+  stroke: #e3e3e3;
+}
+
+.stateCircle:hover {
+	stroke: grey;
+}
+
 .chart {
   display: block;
   margin: 0;

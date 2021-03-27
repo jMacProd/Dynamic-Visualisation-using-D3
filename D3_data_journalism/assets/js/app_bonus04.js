@@ -5,7 +5,7 @@ var svgHeight = 500;
 var margin = {
     top: 20,
     right: 40,
-    bottom: 80,
+    bottom: 90,
     left: 100
   };
 
@@ -111,6 +111,8 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     //X axis - consider dividing income by 1000 if teansition too jarring
     data.income = parseInt(data.income);
     data.poverty = parseFloat(data.poverty);
+    data.age = parseFloat(data.age);
+    console.log(data.age)
     //Y Axis
     data.healthcare = parseFloat(data.healthcare);
     data.obesity = parseFloat(data.obesity);
@@ -267,6 +269,14 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
   .classed("inactive", true)
   .text("Poverty (%)");
 
+  //Third X Lable
+  var agelabel = labelsGroup.append("text")
+  .attr("x", 0)
+  .attr("y", 60)
+  .attr("value", "age") // value to grab for event listener
+  .classed("inactive", true)
+  .text("Age (Median)");
+
   
   // Create group for two y-axis labels
   var YlabelsGroup = chartGroup.append("g")
@@ -322,7 +332,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
       //circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
 
-      //Update tip label
+      //Update tip label - this works
       tiplabelx = chosenXAxis[0].toUpperCase() + 
       chosenXAxis.slice(1);
 
@@ -336,14 +346,31 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
         povertylabel
           .classed("active", false)
           .classed("inactive", true);
+        agelabel
+        .classed("active", false)
+        .classed("inactive", true);
       }
-      else {
-        incomelabel
-          .classed("active", false)
-          .classed("inactive", true);
+      else if (chosenXAxis === "poverty") {
         povertylabel
           .classed("active", true)
           .classed("inactive", false);
+        incomelabel
+          .classed("active", false)
+          .classed("inactive", true);
+        agelabel
+        .classed("active", false)
+        .classed("inactive", true);
+      }
+      else {
+        agelabel
+          .classed("active", true)
+          .classed("inactive", false);
+        povertylabel
+          .classed("active", false)
+          .classed("inactive", true);
+        incomelabel
+          .classed("active", false)
+          .classed("inactive", true);
       }
     }
   });
