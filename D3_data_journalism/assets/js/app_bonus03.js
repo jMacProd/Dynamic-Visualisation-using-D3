@@ -223,13 +223,12 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     .html(function(d) {
       return (`${d.state}
       <br>
-      Income: ${d.chosenXAxis}<br>
-      Healthcare: ${d.chosenYAxis}`);
+      Income: ${d[chosenXAxis]}<br>
+      Healthcare: ${d[chosenYAxis]}`);
     });
 
     // Step 2: Create the tooltip in chartGroup.
     chartGroup.call(toolTip);
-
 
 
 
