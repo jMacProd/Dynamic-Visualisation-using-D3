@@ -70,7 +70,16 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", "10")
     .attr("fill", "#8bbcd5")
-    .attr("opacity", "1");
+    .attr("opacity", "1")
+    .on("mouseover", function(d) {
+      toolTip.show(d, this)
+    })
+    .on("mousemove", function(d) {
+      toolTip.show(d, this)
+    })
+    .on("mouseout", function(d) {
+      toolTip.hide(d);
+    });
 
       // Create country code labels for circles
         //https://stackoverflow.com/questions/26576050/d3-enter-append-not-appending-all-elements-of-my-array
@@ -93,7 +102,7 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     var toolTip = d3.tip()
     .attr("class", "tooltip")
     .attr("class", "d3-tip")
-    .offset([80, -60])
+    .offset([-8, 0])
     .html(function(d) {
       return (`${d.state}
       <br>
@@ -104,14 +113,14 @@ d3.csv("assets/data/data.csv").then(function(healthData) {
     // Step 2: Create the tooltip in chartGroup.
     chartGroup.call(toolTip);
 
-    // Step 3: Create "mouseover" event listener to display tooltip
-    circlesGroup.on("mouseover", function(d) {
-      toolTip.show(d, this);
-    })
-    // Step 4: Create "mouseout" event listener to hide tooltip
-    .on("mouseout", function(d) {
-      toolTip.hide(d);
-    });
+    // // Step 3: Create "mouseover" event listener to display tooltip
+    // circlesGroup.on("mouseover", function(d) {
+    //   toolTip.show(d, this);
+    // })
+    // // Step 4: Create "mouseout" event listener to hide tooltip
+    // .on("mouseout", function(d) {
+    //   toolTip.hide(d);
+    // });
 
 
     
