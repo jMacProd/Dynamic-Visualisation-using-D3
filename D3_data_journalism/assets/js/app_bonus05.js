@@ -9,7 +9,7 @@ function makeResponsive() {
   
   //SET SVG Width - but consider changing it to responsive
     //http://bl.ocks.org/eesur/909c6a83a1d969918a5389966c5f431a
-  var containerWidth = +d3.select('.container').style('width').slice(0, -2)
+  var containerWidth = +d3.select('.col-md-9').style('width').slice(0, -2)
   var svgWidth = containerWidth;
   var svgHeight = containerWidth*0.52;
 
