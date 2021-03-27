@@ -47,7 +47,7 @@ function xScale(healthData, chosenXAxis) {
 function yScale(healthData, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(healthData, d => d[chosenYAxis]*1.05)])
+    .domain([0, d3.max(healthData, d => d[chosenYAxis]*1.1)])
     .range([height, 0]);
 
   return yLinearScale;
@@ -112,10 +112,10 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
     data.income = parseInt(data.income);
     data.poverty = parseFloat(data.poverty);
     data.age = parseFloat(data.age);
-    console.log(data.age)
     //Y Axis
     data.healthcare = parseFloat(data.healthcare);
     data.obesity = parseFloat(data.obesity);
+    data.smokes = parseFloat(data.smokes);
     });
 
    
@@ -293,12 +293,21 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
 
   // Second y axis
   var obesitylabel = YlabelsGroup.append("text")
-  .attr("y", 0 - 65)
+  .attr("y", 0 - 50)
   .attr("x", 0 - (height / 2))
-  .attr("dy", "1em")
+  //.attr("dy", "1em")
   .attr("value", "obesity") // value to grab for event listener
   .classed("inactive", true)
   .text("Obesity (%)");
+
+  // Third y axis
+  var smokeslabel = YlabelsGroup.append("text")
+  .attr("y", 0 - 70)
+  .attr("x", 0 - (height / 2))
+  //.attr("dy", "1em")
+  .attr("value", "smokes") // value to grab for event listener
+  .classed("inactive", true)
+  .text("Smokes (%)");
 
 
 
@@ -414,14 +423,31 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
         obesitylabel
           .classed("active", false)
           .classed("inactive", true);
+        smokeslabel
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else if (chosenYAxis === "obesity") {
+        obesitylabel
+          .classed("active", true)
+          .classed("inactive", false);
+        healthcarelabel
+          .classed("active", false)
+          .classed("inactive", true);
+        smokeslabel
+          .classed("active", false)
+          .classed("inactive", true);
       }
       else {
+        smokeslabel
+          .classed("active", true)
+          .classed("inactive", false);
         healthcarelabel
           .classed("active", false)
           .classed("inactive", true);
         obesitylabel
-          .classed("active", true)
-          .classed("inactive", false);
+          .classed("active", false)
+          .classed("inactive", true);
       }
     }
   });
