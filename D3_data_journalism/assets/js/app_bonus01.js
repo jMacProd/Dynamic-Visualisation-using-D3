@@ -241,16 +241,16 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
   
   // First y axis
   var healthcarelabel = YlabelsGroup.append("text")
-  .attr("y", 0 - margin.left)
+  .attr("y", -30)
   .attr("x", 0 - (height / 2))
-  .attr("dy", "1em")
+  //.attr("dy", "1em")
   .attr("value", "healthcare") // value to grab for event listener
   .classed("active", true)
   .text("Health Care");
 
   // Second y axis
   var obesitylabel = YlabelsGroup.append("text")
-  .attr("y", 0 - margin.left)
+  .attr("y", 0 - 65)
   .attr("x", 0 - (height / 2))
   .attr("dy", "1em")
   .attr("value", "obesity") // value to grab for event listener
@@ -302,6 +302,52 @@ d3.csv("assets/data/data.csv").then(function(healthData, err) {
           .classed("active", false)
           .classed("inactive", true);
         povertylabel
+          .classed("active", true)
+          .classed("inactive", false);
+      }
+    }
+  });
+
+  // y axis labels event listener
+  YlabelsGroup.selectAll("text")
+  .on("click", function() {
+    // get value of selection
+    var value = d3.select(this).attr("value");
+    if (value !== chosenYAxis) {
+
+      // replaces chosenXAxis with value
+      chosenYAxis = value;
+      //console.log(chosenXAxis) //Confirmed selecting poverty
+
+      // functions here found above csv import
+      // updates x scale for new data
+      yLinearScale = yScale(healthData, chosenYAxis);
+
+      // updates x axis with transition
+      yAxis = renderAxes(yLinearScale, yAxis);
+
+      // updates circles with new x values
+      circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+      labels = rendercirclelabels(labels, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+
+      // updates tooltips with new info
+      //circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+      
+      // changes classes to change bold text
+      if (chosenYAxis === "healthcare") {
+        healthcarelabel
+          .classed("active", true)
+          .classed("inactive", false);
+        obesitylabel
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else {
+        healthcarelabel
+          .classed("active", false)
+          .classed("inactive", true);
+        obesitylabel
           .classed("active", true)
           .classed("inactive", false);
       }
