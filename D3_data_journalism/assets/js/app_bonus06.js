@@ -230,7 +230,38 @@ function makeResponsive() {
       .attr("font-size", 10)
       .text(function(d) {
         return d.abbr;
+      }).on("mouseover", function(d) {
+        toolTip.show(d, circlesGroup);
+      })
+      // .on("mousemove", function(d) {
+      //   toolTip.show(d, this)
+      // })
+      .on("mouseout", function(d) {
+        toolTip.hide(d);
       });
+
+      // labels.on("mouseover", function(d) {
+      //   toolTip.show(d, this);
+      // })
+      // // .on("mousemove", function(d) {
+      // //   toolTip.show(d, this)
+      // // })
+      // .on("mouseout", function(d) {
+      //   toolTip.hide(d);
+      // });
+
+
+      // // Step 3: Create "mouseover" event listener to display tooltip
+      // circlesGroup.on("mouseover", function(d) {
+      //   toolTip.show(d, this);
+      // })
+      // // Step 4: Create "mouseout" event listener to hide tooltip
+      //   .on("mouseout", function(d) {
+      //     toolTip.hide(d);
+      //   });
+
+      
+
 
 
       // Step 1: Initialize Tooltip

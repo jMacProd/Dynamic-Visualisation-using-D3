@@ -30,6 +30,10 @@
   text-anchor: middle;
 }
 
+.stateText:hover .stateCircle {
+  stroke: grey;
+}
+
 .stateCircle {
   fill: #89bdd3;
   stroke: #e3e3e3;

@@ -15,6 +15,7 @@
 * JavaScript
 * CSS
 * D3.js
+* Bootstrap
 * Github pages - publish site
 
 ## Navigating the repository:
