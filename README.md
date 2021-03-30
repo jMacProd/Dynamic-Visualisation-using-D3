@@ -1,7 +1,7 @@
 # D3-challenge
 * Building a scatterplot chart with D3 to visualise health risk trends.
-* The dataset is based on the 2014 American Community Survey (ACS) 1-year estimates affrefated by state. 
-* DIfferent criteria can be selected from the multi-layered X and Y axes (ie Income vs Healthcare or Age vs Obesity).
+* The dataset is based on the 2014 American Community Survey (ACS) 1-year estimates aggregated by state. 
+* Different criteria can be selected from the multi-layered X and Y axes (ie Income vs Healthcare or Age vs Obesity).
 * Detail of the criteria selected can be revealed by hovering over individual points.
 
 ## Link to site:
@@ -36,12 +36,12 @@
     * app_bonus.js
 
 ## Notes
-* Index.html is linked with app_bonus.js - not app_basic.js - which fulfils the interactive and responsive brief.
+* Index.html is linked with app_bonus06.js - not app_basic.js - which fulfils the interactive and responsive brief.
 * Each point on scatterplot is is labeled with state abbreviation.
 * Three x axis titles to select criteria based around demographics (Income, Poverty and Age).
 * Three y axis titles to select criteria based around health risks (Healthcare, Obesity and Smoking ).
 * Axes scale and points transition to reflect criteria selected.
-* Tips show full state name, selected axess variables and values and border indicates which point is selected.
+* Tips show full state name, selected axes variables and values and border indicates which point is selected.
    
 ## Contact
 Created by https://github.com/jMacProd - feel free to contact me!
